@@ -1,7 +1,7 @@
 
 from sqlalchemy import select
 from sqlalchemy.dialects.mysql import match
-
+import requests
 from telegram_ecommerce.database import models
 from telegram_ecommerce.database.models import Session
 from telegram_ecommerce.utils.utils import hash_password
@@ -25,8 +25,12 @@ def check_password(user_id, password):
     return hash_password(password) == get_password(user_id)
 
 def get_name_of_all_categories():
-    with Session() as session:
-        return session.scalars(select(models.Category.name)).all()
+    all_categories = requests.get("https://api.ashewa.com/bot/categories/").json()
+    categories = []
+    for item in all_categories:
+        categories.append(item.get("name","Boss"))
+    return categories
+  
 
 def get_category_id_from_name(name):
     with Session() as session:

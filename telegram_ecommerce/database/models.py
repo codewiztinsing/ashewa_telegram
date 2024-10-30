@@ -71,7 +71,9 @@ class Order(Base):
     product = relationship('Product')
     user = relationship('Customer')
 
-db_url = f"mysql+pymysql://{environ['DB_USER']}:{environ['DB_PASSWORD']}@{environ['DB_HOST']}/{environ['DB_NAME']}"
+# db_url = f"mysql+pymysql://{environ['DB_USER']}:{environ['DB_PASSWORD']}@{environ['DB_HOST']}/{environ['DB_NAME']}"
+db_url = f"mysql+pymysql://root:18171250@localhost/telegram_ecommerce"
+
 engine = create_engine(db_url)
 Session = sessionmaker(engine)
 
