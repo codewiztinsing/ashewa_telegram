@@ -19,16 +19,17 @@ def user_exist(user_id):
     #     return bool(session.get(models.Customer, user_id))
 
 def is_admin(user_id):
-    with Session() as session:
-        user = session.get(models.Customer, user_id)
-        return user.is_admin if user else False
+    return False
+    # with Session() as session:
+    #     user = session.get(models.Customer, user_id)
+    #     return user.is_admin if user else False
 
 def get_password(user_id):
 
     return "123456"
-    with Session() as session:
-        user = session.get(models.Customer, user_id)
-        return user.password_hash
+    # with Session() as session:
+    #     user = session.get(models.Customer, user_id)
+    #     return user.password_hash
 
 def check_password(user_id, password):
     return hash_password(password) == get_password(user_id)
@@ -70,13 +71,14 @@ def get_all_available_by_category_name(name):
     return get_all_available_by_category_id(name)
 
 def get_ratings_of_a_product(product_id):
-    with Session() as session:
-        stmt = (
-            select(models.Order.rating)
-            .where(models.Order.product_id == product_id)
-            .where(models.Order.rating != None)
-        )
-        return session.scalars(stmt).all()
+    return None
+    # with Session() as session:
+    #     stmt = (
+    #         select(models.Order.rating)
+    #         .where(models.Order.product_id == product_id)
+    #         .where(models.Order.rating != None)
+    #     )
+    #     return session.scalars(stmt).all()
 
 def count_occurrence_of_specified_rating(product_id, rating):
     all_ratings = get_ratings_of_a_product(product_id)

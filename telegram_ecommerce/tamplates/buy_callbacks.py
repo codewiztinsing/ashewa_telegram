@@ -153,9 +153,7 @@ async def handle_payment_method_callback(update, context):
         # Add more logic for handling Telebirr payment here
 
     elif payment_method == 'ethswitch':
-            print("bot data = ",context.bot_data)
-            print("user data = ",context.user_data)
-            print("chat data = ",context.user_data)
+        
             data = requests.post(f"{base_url}/bot/npg/",{
                 "orderId":333,
                 "price":322
@@ -164,19 +162,19 @@ async def handle_payment_method_callback(update, context):
             if data != None:
                 data = data.json()
             formUrl = data["data"].get("formUrl",None)
-            print("ethswitch url = ",formUrl)
+           
           
             await query.message.reply_text(
                 "Open Ethiswithch",
                 reply_markup=ReplyKeyboardMarkup(
                     keyboard=[
                         [KeyboardButton(
-                            text="Ethiswithch!",
+                            text="Ethswithch!",
                             web_app=WebAppInfo(url=f"{formUrl}")
                         )]
                     ],
-                    resize_keyboard=True,  # Makes the keyboard smaller
-                    one_time_keyboard=True  # Hides the keyboard after use
+                    resize_keyboard=True, 
+                    one_time_keyboard=True 
                 )
             )
         # Add more logic for handling Ethswitch payment here
