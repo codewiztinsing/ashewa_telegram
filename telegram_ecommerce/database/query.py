@@ -72,7 +72,8 @@ def get_all_available_by_category_name(name):
     return get_all_available_by_category_id(name)
 
 def get_ratings_of_a_product(product_id):
-    return None
+
+    return 5
     # with Session() as session:
     #     stmt = (
     #         select(models.Order.rating)
