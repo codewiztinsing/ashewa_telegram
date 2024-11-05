@@ -46,9 +46,10 @@ def get_name_of_all_categories():
   
 
 def get_category_id_from_name(name):
-    with Session() as session:
-        stmt = select(models.Category.id).where(models.Category.name == name)
-        return session.scalars(stmt).first()
+    return name
+    # with Session() as session:
+    #     stmt = select(models.Category.id).where(models.Category.name == name)
+    #     return session.scalars(stmt).first()
 
 
 def get_all_available_by_category_id(name):
