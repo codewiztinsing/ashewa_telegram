@@ -12,9 +12,10 @@ async def warning_the_user_that_already_have_an_account(update, context):
     return END
 
 
-def warning_the_user_that_he_dont_have_an_account(update, context):
+async def warning_the_user_that_he_dont_have_an_account(update, context):
+    
     text = get_text("user_dont_have_account", context)
-    update.message.reply_text(text)
+    await update.message.reply_text(text)
     return END
 
 

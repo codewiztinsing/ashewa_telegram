@@ -1,18 +1,31 @@
-
+import requests
 from telegram_ecommerce.database import models
 from telegram_ecommerce.database.models import Session
 from telegram_ecommerce.utils.utils import hash_password
 from telegram_ecommerce.utils.consts import admins
 from telegram_ecommerce.database.query import get_password
+import time
 
+
+base_url = "https://api.ashewa.com"
 
 def create_account(user):
     user_id = user.id
     username = user.username
+    first_name = user.first_name
     is_admin = username in admins
-    with Session() as session:
-        session.add(models.Customer(id=user_id, username=username, password_hash="", is_admin=is_admin))
-        session.commit()
+    body = {
+        "user_id":user_id,
+        "username":username,
+        "first_name":first_name,
+        "last_name":user.last_name
+    }
+    requests.post(f"{base_url}/bot/register_telegram_user/",body)
+    time.sleep(25)
+
+    # with Session() as session:
+    #     session.add(models.Customer(id=user_id, username=username, password_hash="", is_admin=is_admin))
+    #     session.commit()
 
 def delete_account(user_id):
     with Session() as session:
@@ -24,6 +37,7 @@ def delete_account(user_id):
         else: return False
 
 def set_password(user_id, password):
+    return True
     with Session() as session:
         user = session.get(models.Customer, user_id)
         user.password_hash = password

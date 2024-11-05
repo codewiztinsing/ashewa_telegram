@@ -12,6 +12,7 @@ from telegram_ecommerce.handlers.search import search
 from telegram_ecommerce.tamplates.rating import rating_precess_handlers
 from telegram_ecommerce.tamplates.buy_callbacks import (
     pre_checkout_handler,
+    payment_handler,
     successful_payment_handler)
 
 
@@ -25,6 +26,7 @@ all_handlers = ([
     search,
     show_categories, 
     pre_checkout_handler, 
+  
     successful_payment_handler] +
     rating_precess_handlers)
 

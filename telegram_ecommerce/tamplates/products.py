@@ -56,7 +56,10 @@ async def send_a_product(update, context, product, pattern_identifier):
         pattern_identifier, context)
     text = get_text_for_product(product, context)
     await query.message.edit_media(
-        media = InputMediaPhoto(product.image_id, text),
+        media = InputMediaPhoto(
+            # product.image_id, 
+            "https://api.ashewa.com/media/products-thumbnails/1687522370.webp",
+                                text),
         reply_markup = markup)
 
 
@@ -66,7 +69,10 @@ async def send_a_detailed_product(update, context,  product, pattern_identifier)
         pattern_identifier, context)
     text = get_text_for_detailed_product(product, context)
     await query.message.edit_media(
-        media = InputMediaPhoto(product.image_id, text),
+        media = InputMediaPhoto(
+            "https://api.ashewa.com/media/products-thumbnails/1687522370.webp",
+            # product.image_id,
+              text),
         reply_markup = markup)
 
 
@@ -80,18 +86,19 @@ async def send_a_inline_with_a_list_of_products(
 
 
 def get_text_for_product(product, context):
-    text = (product.name + "\n\n" + 
-        get_text("price", context) + str(product.price))
+    print("products  = ",product)
+    text = (product.get("name") + "\n\n" + 
+        get_text("price", context) + str(product.get("price")))
     return text
 
 
 def get_text_for_detailed_product(product, context):
-    product_id = product.id
-    text = (product.name + "\n\n" +
-        get_text("price", context) + str(product.price) + '\n\n' +
-        str(product.description) + '\n\n' + 
+    product_id = product.get("id",None)
+    text = (product.get("name") + "\n\n" +
+        get_text("price", context) + str(product.get("price")) + '\n\n' +
+        str(product.get("description")[:100] + '\n\n' + 
         get_text("purchased", context) + 
-        str(product.quantity_purchased) + '\n\n' +
+        str(5) + '\n\n' +
         get_text("rating", context) + '\n' + 
         str(count_occurrence_of_specified_rating(product_id, 10)) + ' ' +
         get_text("good", context) + '\n' + 
@@ -99,6 +106,6 @@ def get_text_for_detailed_product(product, context):
         get_text("regular", context) + '\n' + 
         str(count_occurrence_of_specified_rating(product_id, 0)) + ' ' +
         get_text("bad", context) 
-        )
+        ))
     return text
 

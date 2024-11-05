@@ -72,7 +72,8 @@ async def show_list_of_product_that_match(update, context):
         pattern_identifier, context)
     text = get_text_for_product(product, context)
     await update.message.reply_photo(
-        product.image_id,
+        "https://ashewa.com/shop/sidebar/3cols?subcategory=home-decor",
+        # product.image_id,
         caption = text,
         reply_markup=markup) 
     return SHOW_LIST_OF_PRODUCT_THAT_MATCH

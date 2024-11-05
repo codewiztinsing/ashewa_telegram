@@ -57,6 +57,7 @@ async def ask_for_category_name(update, context):
     put_products_data_in_user_data(context.user_data)
     text = get_text("ask_for_category_name_of_the_product", context)
     name_of_all_categories = get_name_of_all_categories()
+
     if name_of_all_categories:
         await send_a_inline_with_a_list_of_products(
             update, 
@@ -72,6 +73,7 @@ async def ask_for_category_name(update, context):
 async def get_list_of_products(update, context):
     category_name = update.message.text
     name_of_all_categories = get_name_of_all_categories()
+    
     if category_name in name_of_all_categories:
         save_products_in_user_data(context.user_data, category_name)
         if not context.user_data[products_data_key]["products"].is_empty():
@@ -90,11 +92,13 @@ async def get_list_of_products(update, context):
 
 async def show_list_of_products(update, context):
     product = context.user_data[products_data_key]["products"].next()
+    print("type of products = ",type("product"))
     markup = tamplate_for_show_a_list_of_products(
         pattern_identifier, context)
     text = get_text_for_product(product, context)
     await update.message.reply_photo(
-        product.image_id,
+        # product.get("image"),
+        "https://api.ashewa.com/media/products-thumbnails/1699424267.webp",
         caption = text,
         reply_markup=markup) 
     return SHOW_LIST_OF_PRODUCTS
