@@ -48,10 +48,7 @@ all_public_commands_descriptions = [
         "register", 
         get_text("register_description")
         ),
-    BotCommand(
-        "language", 
-        get_text("language_description")
-        ),
+ 
     BotCommand(
         "show_categories", 
         get_text("show_categories_description")

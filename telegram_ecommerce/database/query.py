@@ -10,7 +10,7 @@ base_url = "https://api.ashewa.com"
 
 def user_exist(user_id):
     response = requests.get(f"{base_url}/bot/check-user/{user_id}/")
-    print("user data = ",response)
+   
     if response:
         response  = response.json()
         return response.get("exists")
