@@ -22,7 +22,7 @@ all_handlers = ([
     register,
     add_category, 
     add_product, 
-    language,
+    # language,
     search,
     show_categories, 
     pre_checkout_handler, 
