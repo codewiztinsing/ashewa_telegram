@@ -25,8 +25,9 @@ def add_pre_checkout_query_to_user_data(context, query):
 async def send_a_shipping_message(update, context, product , pattern_identifier):
     title = product.get("name")
     description = product.get("description")
+    selling_price = product.get("selling_price",1)
     product_id = product.get("id")
-    prices = [LabeledPrice("Price", int( 100 * product.get("selling_price",1050)))]
+    prices = [LabeledPrice("Price", int(selling_price))]
     telebirr = InlineKeyboardButton("Telebirr", callback_data='telebirr')
     ethswitch = InlineKeyboardButton("Ethswitch", callback_data='ethswitch')
     inline_keyboard = InlineKeyboardMarkup([[telebirr, ethswitch]])
@@ -34,7 +35,7 @@ async def send_a_shipping_message(update, context, product , pattern_identifier)
     context.transcation = {
         "product_id":product_id,
         "user_id":user_id,
-        "price":324132
+        "price":selling_price
 
     }
     
@@ -145,12 +146,7 @@ async def handle_payment_method_callback(update, context):
                     one_time_keyboard=True  # Hides the keyboard after use
                 )
             )
-    
-        # await context.bot.send_message(
-        #     chat_id=query.message.chat.id,
-        #     text="You chose Telebirr. Please follow the instructions to complete your payment."
-        # )
-        # Add more logic for handling Telebirr payment here
+ 
 
     elif payment_method == 'ethswitch':
         
@@ -177,7 +173,7 @@ async def handle_payment_method_callback(update, context):
                     one_time_keyboard=True 
                 )
             )
-        # Add more logic for handling Ethswitch payment here
+        
 
     else:
         await context.bot.send_message(

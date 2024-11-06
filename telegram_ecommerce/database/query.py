@@ -15,14 +15,11 @@ def user_exist(user_id):
         response  = response.json()
         return response.get("exists")
     return False
-    # with Session() as session:
-    #     return bool(session.get(models.Customer, user_id))
+
 
 def is_admin(user_id):
     return False
-    # with Session() as session:
-    #     user = session.get(models.Customer, user_id)
-    #     return user.is_admin if user else False
+
 
 def get_password(user_id):
 
@@ -35,7 +32,7 @@ def check_password(user_id, password):
     return hash_password(password) == get_password(user_id)
 
 def get_name_of_all_categories():
-    all_categories = requests.get("https://api.ashewa.com/bot/categories/")
+    all_categories = requests.get(f"{base_url}/bot/categories/")
     if all_categories != None:
         all_categories = all_categories.json()
         
@@ -51,19 +48,13 @@ def get_category_id_from_name(name):
 
 
 def get_all_available_by_category_id(name):
-    products_from_api = requests.get(f"https://api.ashewa.com/bot/products/?parent_category={name}")
+    products_from_api = requests.get(f"{base_url}/bot/products/?parent_category={name}")
     if products_from_api !=None:
         products_from_api=products_from_api.json()
         return products_from_api
       
     return []
-    # with Session() as session:
-    #     stmt = (
-    #         select(models.Product)
-    #         .where(models.Product.category_id == name)
-    #         .where(models.Product.quantity_in_stock > 0)
-    #     )
-    #     return session.scalars(stmt).all()
+  
 
 def get_all_available_by_category_name(name):
     category_id = get_category_id_from_name(name)
@@ -72,19 +63,13 @@ def get_all_available_by_category_name(name):
 def get_ratings_of_a_product(product_id):
 
     return 5
-    # with Session() as session:
-    #     stmt = (
-    #         select(models.Order.rating)
-    #         .where(models.Order.product_id == product_id)
-    #         .where(models.Order.rating != None)
-    #     )
-    #     return session.scalars(stmt).all()
+  
 
 def count_occurrence_of_specified_rating(product_id, rating):
     all_ratings = get_ratings_of_a_product(product_id)
     return 5
 def search_products(string_to_search):
-    data = requests.get(f"https://api.ashewa.com/search/?keyword={string_to_search}")
+    data = requests.get(f"{base_url}/search/?keyword={string_to_search}")
     _data = []
     for d in data.json():
         _data.append({
