@@ -23,9 +23,6 @@ def create_account(user):
     requests.post(f"{base_url}/bot/register_telegram_user/",body)
     time.sleep(25)
 
-    # with Session() as session:
-    #     session.add(models.Customer(id=user_id, username=username, password_hash="", is_admin=is_admin))
-    #     session.commit()
 
 def delete_account(user_id):
     with Session() as session:
@@ -91,6 +88,7 @@ def add_orders(order_id, price, user_id, product_id, rating = None):
         session.commit()
 
 def product_has_purchased(product_id):
+    return None
     with Session() as session:
         product = session.get(models.Product, product_id)
         product.quantity_in_stock -= 1
@@ -98,6 +96,7 @@ def product_has_purchased(product_id):
         session.commit()
 
 def add_rating_to_an_order(order_id, rating):
+    return None
     with Session() as session:
         order = session.get(models.Order, order_id)
         order.rating = rating

@@ -68,12 +68,16 @@ async def get_list_of_products_that_match(update, context):
 
 async def show_list_of_product_that_match(update, context):
     product = context.user_data[products_data_key]["products"].next()
+
+    print("search product = ",product)
     markup = tamplate_for_show_a_list_of_products(
         pattern_identifier, context)
     text = get_text_for_product(product, context)
+
+    print("products - ",product)
+
     await update.message.reply_photo(
-        "https://ashewa.com/shop/sidebar/3cols?subcategory=home-decor",
-        # product.image_id,
+        product.get("image","https://ashewa.com/shop/sidebar/3cols?subcategory=home-decor"),
         caption = text,
         reply_markup=markup) 
     return SHOW_LIST_OF_PRODUCT_THAT_MATCH

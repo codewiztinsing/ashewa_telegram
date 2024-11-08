@@ -57,9 +57,7 @@ async def send_a_product(update, context, product, pattern_identifier):
     text = get_text_for_product(product, context)
     await query.message.edit_media(
         media = InputMediaPhoto(
-            # product.image_id, 
-            "https://api.ashewa.com/media/products-thumbnails/1687522370.webp",
-                                text),
+            product.get("image","https://api.ashewa.com/media/products-thumbnails/1687522370.webp"),text),
         reply_markup = markup)
 
 
@@ -70,8 +68,7 @@ async def send_a_detailed_product(update, context,  product, pattern_identifier)
     text = get_text_for_detailed_product(product, context)
     await query.message.edit_media(
         media = InputMediaPhoto(
-            "https://api.ashewa.com/media/products-thumbnails/1687522370.webp",
-            # product.image_id,
+            product.get("image", "https://api.ashewa.com/media/products-thumbnails/1687522370.webp"),
               text),
         reply_markup = markup)
 
@@ -86,16 +83,15 @@ async def send_a_inline_with_a_list_of_products(
 
 
 def get_text_for_product(product, context):
-    print("products  = ",product)
     text = (product.get("name") + "\n\n" + 
-        get_text("price", context) + str(product.get("price")))
+        get_text("price", context) + str(product.get("selling_price")))
     return text
 
 
 def get_text_for_detailed_product(product, context):
     product_id = product.get("id",None)
     text = (product.get("name") + "\n\n" +
-        get_text("price", context) + str(product.get("price")) + '\n\n' +
+        get_text("price", context) + str(product.get("selling_price")) + '\n\n' +
         str(product.get("description")[:100] + '\n\n' + 
         get_text("purchased", context) + 
         str(5) + '\n\n' +

@@ -92,13 +92,12 @@ async def get_list_of_products(update, context):
 
 async def show_list_of_products(update, context):
     product = context.user_data[products_data_key]["products"].next()
-    print("type of products = ",type("product"))
+   
     markup = tamplate_for_show_a_list_of_products(
         pattern_identifier, context)
     text = get_text_for_product(product, context)
     await update.message.reply_photo(
-        # product.get("image"),
-        "https://api.ashewa.com/media/products-thumbnails/1699424267.webp",
+        product.get("image","https://api.ashewa.com/media/products-thumbnails/1699424267.webp"),
         caption = text,
         reply_markup=markup) 
     return SHOW_LIST_OF_PRODUCTS

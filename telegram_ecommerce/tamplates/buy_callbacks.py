@@ -23,6 +23,7 @@ def add_pre_checkout_query_to_user_data(context, query):
 
 
 async def send_a_shipping_message(update, context, product , pattern_identifier):
+    print("product in shipping info =",product)
     title = product.get("name")
     description = product.get("description")
     selling_price = product.get("selling_price",1)
@@ -32,14 +33,15 @@ async def send_a_shipping_message(update, context, product , pattern_identifier)
     ethswitch = InlineKeyboardButton("Ethswitch", callback_data='ethswitch')
     inline_keyboard = InlineKeyboardMarkup([[telebirr, ethswitch]])
     user_id = update.effective_user.id
-    context.transcation = {
+    context.user_data["transcation"] = {
         "product_id":product_id,
         "user_id":user_id,
         "price":selling_price
 
     }
     
-    body =    { "user_id":user_id,
+    body =    { 
+               "user_id":user_id,
                 "product_id": product_id,
                 "quantity": 2
     }
@@ -124,7 +126,8 @@ async def payment_handler(update, context) -> None:
     elif query.data == 'ethswitch':
         await query.edit_message_text(text="You selected Ethswitch. Proceeding with payment...")
         # Add further processing logic for Ethswitch payment here
-
+import random
+import time
 async def handle_payment_method_callback(update, context):
     query = update.callback_query
     await query.answer()  # Acknowledge the callback
@@ -147,32 +150,35 @@ async def handle_payment_method_callback(update, context):
                 )
             )
  
-
+ 
     elif payment_method == 'ethswitch':
-        
-            data = requests.post(f"{base_url}/bot/npg/",{
-                "orderId":333,
-                "price":322
+            price = context.user_data.get("transcation",100).get("price",100)
+            data = requests.post(f"https://api.ashewa.com/bot/npg/",{
+                "orderId":322,
+                "price":int(price)*100
             })
+            
             print("ethswitch data = ",data.json())
             if data != None:
                 data = data.json()
-            formUrl = data["data"].get("formUrl",None)
-           
-          
-            await query.message.reply_text(
-                "Open Ethiswithch",
-                reply_markup=ReplyKeyboardMarkup(
-                    keyboard=[
-                        [KeyboardButton(
-                            text="Ethswithch!",
-                            web_app=WebAppInfo(url=f"{formUrl}")
-                        )]
-                    ],
-                    resize_keyboard=True, 
-                    one_time_keyboard=True 
-                )
-            )
+                formUrl = data["data"].get("formUrl",None)
+                if formUrl != None:
+                    await query.message.reply_text(
+                        "Open Ethiswithch",
+                        reply_markup=ReplyKeyboardMarkup(
+                            keyboard=[
+                                [KeyboardButton(
+                                    text="Ethswich!",
+                                    web_app=WebAppInfo(url=f"{formUrl}")
+                                )]
+                            ],
+                            resize_keyboard=True, 
+                            one_time_keyboard=True 
+                        )
+                    )
+            else:
+                pass
+
         
 
     else:

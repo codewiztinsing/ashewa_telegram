@@ -22,11 +22,8 @@ def is_admin(user_id):
 
 
 def get_password(user_id):
-
     return "123456"
-    # with Session() as session:
-    #     user = session.get(models.Customer, user_id)
-    #     return user.password_hash
+  
 
 def check_password(user_id, password):
     return hash_password(password) == get_password(user_id)
