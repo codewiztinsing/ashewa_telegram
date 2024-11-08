@@ -1,4 +1,5 @@
 
+import urllib.parse
 from sqlalchemy import select
 from sqlalchemy.dialects.mysql import match
 import requests
@@ -65,15 +66,21 @@ def get_ratings_of_a_product(product_id):
 def count_occurrence_of_specified_rating(product_id, rating):
     all_ratings = get_ratings_of_a_product(product_id)
     return 5
+
+import urllib
 def search_products(string_to_search):
     data = requests.get(f"https://api.ashewa.com/search/?keyword={string_to_search}")
-    print("data ************* = ",data.json())
+
     _data = []
     for d in data.json():
+        print("price = ",d)
+        loc = d.get('image')
+        img = f"https://api.ashewa.com{loc}",
+        img = urllib.parse.urlparse(img[0].strip("'"))
         _data.append({
             "id":d.get("id"),
             "name":d.get("name"),
-            "image":f"https://api.ashewa.com/{d.get('image')}",
+            "image":img.netloc + img.path,
             "selling_price":d.get("selling_price",0),
             "description":d.get("name"),
             "quantity":d.get("pending_amount")
