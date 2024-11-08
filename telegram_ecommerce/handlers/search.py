@@ -15,8 +15,6 @@ from telegram_ecommerce.tamplates.products import (
     send_a_detailed_product,
     get_text_for_product,
     ListProductIterator)
-
-
 (END                            ,
 ASK_FOR_TERM_TO_SEARCH          ,
 GET_LIST_OF_PRODUCTS            ,
@@ -73,8 +71,6 @@ async def show_list_of_product_that_match(update, context):
     markup = tamplate_for_show_a_list_of_products(
         pattern_identifier, context)
     text = get_text_for_product(product, context)
-
-    print("products - ",product)
 
     await update.message.reply_photo(
         product.get("image","https://ashewa.com/shop/sidebar/3cols?subcategory=home-decor"),

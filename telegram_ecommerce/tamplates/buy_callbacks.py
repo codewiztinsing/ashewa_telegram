@@ -1,3 +1,5 @@
+import random
+import time
 from telegram import LabeledPrice
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
@@ -126,8 +128,7 @@ async def payment_handler(update, context) -> None:
     elif query.data == 'ethswitch':
         await query.edit_message_text(text="You selected Ethswitch. Proceeding with payment...")
         # Add further processing logic for Ethswitch payment here
-import random
-import time
+
 async def handle_payment_method_callback(update, context):
     query = update.callback_query
     await query.answer()  # Acknowledge the callback
@@ -145,13 +146,14 @@ async def handle_payment_method_callback(update, context):
                             web_app=WebAppInfo(url="https://www.ethiotelecom.et/telebirr/")
                         )]
                     ],
-                    resize_keyboard=True,  # Makes the keyboard smaller
-                    one_time_keyboard=True  # Hides the keyboard after use
+                    resize_keyboard=True, 
+                    one_time_keyboard=True 
                 )
             )
  
  
     elif payment_method == 'ethswitch':
+            print("data xxxxxxxx = ",context.user_data)
             price = context.user_data.get("transcation",100).get("price",100)
             data = requests.post(f"https://api.ashewa.com/bot/npg/",{
                 "orderId":322,
@@ -178,9 +180,6 @@ async def handle_payment_method_callback(update, context):
                     )
             else:
                 pass
-
-        
-
     else:
         await context.bot.send_message(
             chat_id=query.message.chat.id,

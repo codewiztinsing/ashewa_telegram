@@ -66,15 +66,17 @@ def count_occurrence_of_specified_rating(product_id, rating):
     all_ratings = get_ratings_of_a_product(product_id)
     return 5
 def search_products(string_to_search):
-    data = requests.get(f"{base_url}/search/?keyword={string_to_search}")
+    data = requests.get(f"https://api.ashewa.com/search/?keyword={string_to_search}")
+    print("data ************* = ",data.json())
     _data = []
     for d in data.json():
         _data.append({
             "id":d.get("id"),
             "name":d.get("name"),
-            "price":d.get("selling_price",15),
+            "image":f"https://api.ashewa.com/{d.get('image')}",
+            "selling_price":d.get("selling_price",0),
             "description":d.get("name"),
-            "quantity":10
+            "quantity":d.get("pending_amount")
         })
     return _data
 
