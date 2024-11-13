@@ -33,7 +33,7 @@ async def send_a_shipping_message(update, context, product , pattern_identifier)
     prices = [LabeledPrice("Price", int(selling_price))]
     # telebirr = InlineKeyboardButton("Telebirr", callback_data='telebirr')
     ethswitch = InlineKeyboardButton("Ethswitch", callback_data='ethswitch')
-    inline_keyboard = InlineKeyboardMarkup([[telebirr, ethswitch]])
+    inline_keyboard = InlineKeyboardMarkup([[ethswitch]])
     user_id = update.effective_user.id
     context.user_data["transcation"] = {
         "product_id":product_id,
