@@ -74,8 +74,8 @@ async def register_callback_query_step_3(update, context):
             context)["step_3"]
         password = get_password(user_id)
         await query.edit_message_text(
-            "\"" + password + "\", " + 
-            get_text("this_are_the_typed_password", context) + 
+            "\"" 
+           "we'll save your password" + 
             get_text("ask_if_its_all_ok", context), 
             reply_markup=markup)
         return RUNING
