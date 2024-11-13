@@ -21,7 +21,7 @@ def create_account(user):
         "last_name":user.last_name
     }
     requests.post(f"{base_url}/bot/register_telegram_user/",body)
-    time.sleep(25)
+
 
 
 def delete_account(user_id):
@@ -35,10 +35,7 @@ def delete_account(user_id):
 
 def set_password(user_id, password):
     return True
-    with Session() as session:
-        user = session.get(models.Customer, user_id)
-        user.password_hash = password
-        session.commit()
+   
 
 def append_password(user_id, password):
     old_password = get_password(user_id)
@@ -70,19 +67,11 @@ def add_product(
         quantity_purchased=0,
         category_id=None, 
         image_id=None):
-    with Session() as session:
-        session.add(models.Product(
-            name=name,
-            description=description,
-            price=unit_price,
-            quantity_in_stock=quantity_in_stock,
-            quantity_purchased=quantity_purchased,
-            category_id=category_id,
-            image_id=image_id
-        ))
-        session.commit()
+    return False
+   
 
 def add_orders(order_id, price, user_id, product_id, rating = None):
+    return False
     with Session() as session:
         session.add(models.Order(id=order_id, price=price, user_id=user_id, product_id=product_id, rating=rating))
         session.commit()
